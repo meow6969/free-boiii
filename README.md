@@ -4,6 +4,7 @@
 # BOIII ☄️ nnnyyyyaaaaaaaaaaaaa :3
 
 Reverse engineering and analysis of Call of Duty: Black Ops 3.
+67tyofgclk6ryiokfc c6iorfky6yrofkl7 cr6iyrftokcr6yiktfgrc yi67tkgyftkihyfigkfykt
 
 <img src="https://meow6969.github.io/moew/peakbulgarian.jpg">
 
@@ -32,7 +33,7 @@ Reverse engineering and analysis of Call of Duty: Black Ops 3.
 ## Disclaimer
 
 This software has been created purely for the purposes of
-academic research. It is not intended to be used to harm
+free game. It is not intended to be used to harm
 others. Project maintainers are not responsible or
 liable for misuse of the software. Use responsibly.
 
