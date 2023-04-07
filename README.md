@@ -18,7 +18,11 @@ hehe m,e whjen fre game :3
 
 <img src="https://meow6969.github.io/moew/imdanicing.gif">
 
+hehaa
+
 <img src="https://meow6969.github.io/moew/haha.gif">
+
+cionputr
 
 <img src="https://meow6969.github.io/moew/pythoncomputer.gif">
 
