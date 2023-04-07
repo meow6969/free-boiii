@@ -5,7 +5,7 @@
 [![patreon](https://img.shields.io/badge/Patreon-support-red.svg?logo=patreon)](https://www.patreon.com/xlabsproject)
 
 
-# BOIII ☄️
+# BOIII ☄️ nnnyyyyaaaaaaaaaaaaa :3
 
 Reverse engineering and analysis of Call of Duty: Black Ops 3.
 
