@@ -10,6 +10,18 @@ if uwant download free game :3 jus goi to release!!!!!!!! https://github.com/meo
 
 <img src="https://meow6969.github.io/moew/peakbulgarian.jpg">
 
+nyooo u canot do dis !! do not free game >:( !!!!!
+
+<img src="https://meow6969.github.io/moew/cirnotalking.gif">
+
+hehe m,e whjen fre game :3
+
+<img src="https://meow6969.github.io/moew/imdanicing.gif">
+
+<img src="https://meow6969.github.io/moew/haha.gif">
+
+<img src="https://meow6969.github.io/moew/pythoncomputer.gif">
+
 ## Roadmap
 
 - [x] Steam API Emulation
