@@ -15,7 +15,7 @@ nyooo u canot do dis !! do not free game >:( !!!!!
 <img src="https://meow6969.github.io/moew/cirnotalking.gif">
 
 hehe m,e whjen fre game :3
-
+nooo y rt some my gif not work ing :((((((( ic ry 
 <img src="https://meow6969.github.io/moew/imdanicing.gif">
 
 hehaa
