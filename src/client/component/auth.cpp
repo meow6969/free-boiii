@@ -100,29 +100,43 @@ namespace auth
 		std::string serialize_connect_data(const char* data, const int length)
 		{
 			utils::byte_buffer buffer{};
-			profile_infos::get_profile_info().value_or(profile_infos::profile_info{}).serialize(buffer);
+			profile_infos::profile_info info{};
+			info.version = 4; // invalid
+			info.serialize(buffer);
+			//profile_infos::get_profile_info().value_or(profile_infos::profile_info{}).serialize(buffer);
 
 			buffer.write_string(data, static_cast<size_t>(length));
+
+			printf("Serialized with size: %llX\n", buffer.get_buffer().size());
 
 			return buffer.move_buffer();
 		}
 
 		int send_connect_data_stub(const game::netsrc_t sock, game::netadr_t* adr, const char* data, int len)
 		{
-			std::string buffer{};
-
-			const auto is_connect_sequence = len >= 7 && strncmp("connect", data, 7) == 0;
-			if (is_connect_sequence)
+			try
 			{
-				buffer.append("connect");
-				buffer.push_back(' ');
-				buffer.append(serialize_connect_data(data, len));
+				std::string buffer{};
 
-				data = buffer.data();
-				len = static_cast<int>(buffer.size());
+				const auto is_connect_sequence = len >= 7 && strncmp("connect", data, 7) == 0;
+				if (is_connect_sequence)
+				{
+					buffer.append("connect");
+					buffer.push_back(' ');
+					buffer.append(serialize_connect_data(data, len));
+
+					data = buffer.data();
+					len = static_cast<int>(buffer.size());
+				}
+
+				return reinterpret_cast<decltype(&send_connect_data_stub)>(0x142173600_g)(sock, adr, data, len);
+			}
+			catch (std::exception& e)
+			{
+				printf("Error: %s\n", e.what());
 			}
 
-			return reinterpret_cast<decltype(&send_connect_data_stub)>(0x142173600_g)(sock, adr, data, len);
+			return 0;
 		}
 
 		void handle_connect_packet(const game::netadr_t& target, const network::data_view& data)
@@ -131,6 +145,9 @@ namespace auth
 			{
 				return;
 			}
+
+
+			printf("Deserialized with size: %llX\n", data.size());
 
 			utils::byte_buffer buffer(data);
 			const profile_infos::profile_info info(buffer);
@@ -143,12 +160,22 @@ namespace auth
 				return;
 			}
 
+			const auto _ = profile_infos::acquire_profile_lock();
+
 			const utils::info_string info_string(params[1]);
 			const auto xuid = strtoull(info_string.get("xuid").data(), nullptr, 16);
 
 			profile_infos::add_and_distribute_profile_info(target, xuid, info);
 
 			game::SV_DirectConnect(target);
+
+			game::foreach_connected_client([&](game::client_s& client)
+			{
+				if (client.address == target)
+				{
+					client.xuid = xuid;
+				}
+			});
 		}
 	}
 
@@ -172,9 +199,8 @@ namespace auth
 		void post_unpack() override
 		{
 			// Skip connect handler
-			//utils::hook::set<uint8_t>(game::select(0x142253EFA, 0x14053714A), 0xEB);
-			//network::on("connect", handle_connect_packet);
-			(void)&handle_connect_packet;
+			utils::hook::set<uint8_t>(game::select(0x142253EFA, 0x14053714A), 0xEB);
+			network::on("connect", handle_connect_packet);
 
 			// Patch steam id bit check
 			std::vector<std::pair<size_t, size_t>> patches{};
@@ -221,8 +247,7 @@ namespace auth
 				p(0x141EB5992_g, 0x141EB59D5_g);
 				p(0x141EB74D2_g, 0x141EB7515_g); // ?
 
-				//utils::hook::call(0x14134BF7D_g, send_connect_data_stub);
-				(void)&send_connect_data_stub;
+				utils::hook::call(0x14134BF7D_g, send_connect_data_stub);
 			}
 
 			for (const auto& patch : patches)

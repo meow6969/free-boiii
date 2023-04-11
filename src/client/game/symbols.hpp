@@ -35,6 +35,7 @@ namespace game
 	WEAK symbol<void(int localClientNum, eModes fromMode, eModes toMode, uint32_t flags)> Com_SwitchMode{
 		0x14214A4D0
 	};
+	WEAK symbol<const char*(const char* fullpath)> Com_LoadRawTextFile{0x1420F61B0};
 
 	WEAK symbol<void(int localClientNum, const char* text)> Cbuf_AddText{0x1420EC010, 0x1404F75B0};
 	WEAK symbol<void(int localClientNum, ControllerIndex_t controllerIndex, const char* buffer)> Cbuf_ExecuteBuffer{
@@ -73,6 +74,9 @@ namespace game
 
 	// Live
 	WEAK symbol<bool(uint64_t, int*, bool)> Live_GetConnectivityInformation{0x141E0C380};
+
+	// Info
+	WEAK symbol<const char* (const char*, const char* key)> Info_ValueForKey{ 0x1422E87B0 };
 
 	// MSG
 	WEAK symbol<uint8_t(msg_t* msg)> MSG_ReadByte{0x142155450, 0x14050D1B0};
@@ -142,6 +146,7 @@ namespace game
 	WEAK symbol<void(hks::lua_State*, const char*)> Lua_CoD_LoadLuaFile{0x141F11A20, 0x0};
 	WEAK symbol<void(int localClientNum)> CG_LUIHUDRestart{0x140F7E970};
 	WEAK symbol<void(int localClientNum)> CL_CheckKeepDrawingConnectScreen{0x1413CCAE0};
+	WEAK symbol<void(const char* key, int value, hks::lua_State* luaVM)> Lua_SetTableInt{ 0x141F066E0 };
 
 	// Scr
 	WEAK symbol<void(scriptInstance_t inst, int value)> Scr_AddInt{0x1412E9870, 0x14016F160};
@@ -180,6 +185,9 @@ namespace game
 	WEAK symbol<void(const char* text_in)> SV_Cmd_TokenizeString{0x1420EF130, 0x1404FA6C0};
 	WEAK symbol<void()> SV_Cmd_EndTokenizedString{0x1420EF0E0, 0x1404FA670};
 
+	// FS
+	WEAK symbol<char*(int bytes)> FS_AllocMem{0x1422AC9F0, 0x14056C340};
+
 	// Utils
 	WEAK symbol<const char*(char* str)> I_CleanStr{0x1422E9050, 0x140580E80};
 
@@ -197,6 +205,8 @@ namespace game
 
 	WEAK symbol<char> s_dvarPool{0x157AC6220, 0x14A3CB620};
 	WEAK symbol<int> g_dvarCount{0x157AC61CC, 0x14A3CB5FC};
+
+	WEAK symbol<int> fs_loadStack{0x157A65310, 0x14A39C650};
 
 	// Client and dedi struct size differs :(
 	WEAK symbol<client_s_cl*> svs_clients_cl{0x1576F9318, 0};
