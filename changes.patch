@@ -1,0 +1,306 @@
+From 018dcac6b07052be724418846bac3d6bd2e75c89 Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 14:38:13 -0700
+Subject: [PATCH 1/9] hehehehehehee
+
+---
+ .github/workflows/build.yml | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
+
+diff --git a/.github/workflows/build.yml b/.github/workflows/build.yml
+index 500b843..8a4e680 100644
+--- a/.github/workflows/build.yml
++++ b/.github/workflows/build.yml
+@@ -44,16 +44,16 @@ jobs:
+       - name: Build ${{matrix.configuration}}
+         run: msbuild /m /v:minimal /p:Configuration=${{matrix.configuration}} /p:Platform=x64 build/boiii.sln
+ 
+-      - name: Upload ${{matrix.configuration}} symbols
+-        if: matrix.configuration == 'Release' && github.repository_owner == 'momo5502' && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
++      - name: Upload ${{matrix.configuration}} bundle
++        # if: matrix.configuration == 'Release' && github.repository_owner == 'momo5502' && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+         uses: actions/upload-artifact@v3.1.2
+         with:
+-          name: ${{matrix.configuration}} Symbols
++          name: ${{matrix.configuration}} Bundle
+           path: |
+             build/bin/x64/${{matrix.configuration}}/boiii.pdb
+ 
+       - name: Upload ${{matrix.configuration}} binary
+-        if: matrix.configuration == 'Release' && github.repository_owner == 'momo5502' && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
++        if: matrix.configuration == 'Release' # && github.repository_owner == 'momo5502' && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+         uses: actions/upload-artifact@v3.1.2
+         with:
+           name: ${{matrix.configuration}} Binary
+@@ -61,12 +61,20 @@ jobs:
+             build/bin/x64/${{matrix.configuration}}/boiii.exe
+ 
+       - name: Upload ${{matrix.configuration}} data artifacts
+-        if: matrix.configuration == 'Release' && github.repository_owner == 'momo5502' && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
++        # if: matrix.configuration == 'Release' && github.repository_owner == 'momo5502' && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+         uses: actions/upload-artifact@v3.1.2
+         with:
+           name: ${{matrix.configuration}} data artifacts
+           path: |
+             data/*
++          
++      - name: Upload version
++        if: matrix.configuration == 'Release'
++        uses: actions/upload-artifact@v3.1.2
++        with:
++          name: Version
++          path: |
++            build/version.txt
+ 
+   deploy:
+     name: Deploy artifacts
+@@ -116,14 +124,3 @@ jobs:
+ 
+       - name: Publish changes
+         run: ssh ${{ secrets.BOIII_MASTER_SSH_USER }}@${{ secrets.BOIII_MASTER_SSH_ADDRESS }} ${{ secrets.BOIII_MASTER_SSH_CHANGE_PUBLISH_COMMAND }}
+-
+-      - name: Prepare cleanup
+-        run: echo "" > boiii.exe
+-
+-      - name: Cleanup
+-        uses: actions/upload-artifact@v3.1.2
+-        with:
+-          name: Release Binary
+-          retention-days: 1
+-          path: |
+-            boiii.exe
+-- 
+2.38.1
+
+
+From 4f22b7f7ef4eaed7cdb2a1a7a48cf06d7d4dcfa2 Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 14:39:20 -0700
+Subject: [PATCH 2/9] Update README.md
+
+---
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index c75df1e..fdf55ec 100644
+--- a/README.md
++++ b/README.md
+@@ -5,7 +5,7 @@
+ [![patreon](https://img.shields.io/badge/Patreon-support-red.svg?logo=patreon)](https://www.patreon.com/xlabsproject)
+ 
+ 
+-# BOIII ☄️
++# BOIII ☄️ nnnyyyyaaaaaaaaaaaaa :3
+ 
+ Reverse engineering and analysis of Call of Duty: Black Ops 3.
+ 
+-- 
+2.38.1
+
+
+From 2cd93e322a91386c44ee40e2c143a08ecc782731 Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 14:41:46 -0700
+Subject: [PATCH 3/9] nnnyyyaaaaaaaa :3
+
+---
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index fdf55ec..c90ad2a 100644
+--- a/README.md
++++ b/README.md
+@@ -9,7 +9,7 @@
+ 
+ Reverse engineering and analysis of Call of Duty: Black Ops 3.
+ 
+-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeSXYzQITJrcjiifN1nqX1fsVE7VwLZ3vl2g&usqp=CAU">
++<img src="https://meow6969.github.io/moew/peakbulgarian.jpg">
+ 
+ ## Roadmap
+ 
+-- 
+2.38.1
+
+
+From a75f1716095b3a2742146b67d089923a58e5395e Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 14:50:42 -0700
+Subject: [PATCH 4/9] hehehe efreee e :3 cheebburger
+
+---
+ README.md | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/README.md b/README.md
+index c90ad2a..8533824 100644
+--- a/README.md
++++ b/README.md
+@@ -1,9 +1,5 @@
+-[![build](https://img.shields.io/github/actions/workflow/status/momo5502/boiii/build.yml?branch=main&label=Build&logo=github)](https://github.com/momo5502/boiii/actions)
++[![build](https://img.shields.io/github/actions/workflow/status/meow6969/free-boiii/build.yml?branch=main&label=Build&logo=github)](https://github.com/meow6969/free-boiii/actions)
+ [![bugs](https://img.shields.io/github/issues/momo5502/boiii/bug?label=Bugs)](https://github.com/momo5502/boiii/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+-[![github](https://img.shields.io/badge/GitHub-support-c96198.svg?logo=github)](https://github.com/sponsors/momo5502)
+-[![paypal](https://img.shields.io/badge/PayPal-support-blue.svg?logo=paypal)](https://paypal.me/momo5502)
+-[![patreon](https://img.shields.io/badge/Patreon-support-red.svg?logo=patreon)](https://www.patreon.com/xlabsproject)
+-
+ 
+ # BOIII ☄️ nnnyyyyaaaaaaaaaaaaa :3
+ 
+-- 
+2.38.1
+
+
+From 4adfd247ae094b7e9bbbfae18c650c830d2e4b3a Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 14:59:12 -0700
+Subject: [PATCH 5/9] Update README.md
+
+---
+ README.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index 8533824..4575e58 100644
+--- a/README.md
++++ b/README.md
+@@ -4,6 +4,7 @@
+ # BOIII ☄️ nnnyyyyaaaaaaaaaaaaa :3
+ 
+ Reverse engineering and analysis of Call of Duty: Black Ops 3.
++67tyofgclk6ryiokfc c6iorfky6yrofkl7 cr6iyrftokcr6yiktfgrc yi67tkgyftkihyfigkfykt
+ 
+ <img src="https://meow6969.github.io/moew/peakbulgarian.jpg">
+ 
+@@ -32,7 +33,7 @@ Reverse engineering and analysis of Call of Duty: Black Ops 3.
+ ## Disclaimer
+ 
+ This software has been created purely for the purposes of
+-academic research. It is not intended to be used to harm
++free game. It is not intended to be used to harm
+ others. Project maintainers are not responsible or
+ liable for misuse of the software. Use responsibly.
+ 
+-- 
+2.38.1
+
+
+From 4fa6d6fd9003192dcade277cd1047860a4761103 Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 15:05:21 -0700
+Subject: [PATCH 6/9] Update README.md
+
+---
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/README.md b/README.md
+index 4575e58..6689fad 100644
+--- a/README.md
++++ b/README.md
+@@ -6,6 +6,8 @@
+ Reverse engineering and analysis of Call of Duty: Black Ops 3.
+ 67tyofgclk6ryiokfc c6iorfky6yrofkl7 cr6iyrftokcr6yiktfgrc yi67tkgyftkihyfigkfykt
+ 
++if uwant download free game :3 jus goi to release!!!!!!!! https://github.com/meow6969/free-boiii/releases <<<< free game :3 !!!!!!!
++
+ <img src="https://meow6969.github.io/moew/peakbulgarian.jpg">
+ 
+ ## Roadmap
+-- 
+2.38.1
+
+
+From 37cd538178e8a96769835055657dfb83bb8303f8 Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 15:15:14 -0700
+Subject: [PATCH 7/9] Update README.md
+
+---
+ README.md | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/README.md b/README.md
+index 6689fad..d087e2d 100644
+--- a/README.md
++++ b/README.md
+@@ -10,6 +10,18 @@ if uwant download free game :3 jus goi to release!!!!!!!! https://github.com/meo
+ 
+ <img src="https://meow6969.github.io/moew/peakbulgarian.jpg">
+ 
++nyooo u canot do dis !! do not free game >:( !!!!!
++
++<img src="https://meow6969.github.io/moew/cirnotalking.gif">
++
++hehe m,e whjen fre game :3
++
++<img src="https://meow6969.github.io/moew/imdanicing.gif">
++
++<img src="https://meow6969.github.io/moew/haha.gif">
++
++<img src="https://meow6969.github.io/moew/pythoncomputer.gif">
++
+ ## Roadmap
+ 
+ - [x] Steam API Emulation
+-- 
+2.38.1
+
+
+From 091c128b144201cb283020763c86828662e2ddcd Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 15:15:58 -0700
+Subject: [PATCH 8/9] Update README.md
+
+---
+ README.md | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/README.md b/README.md
+index d087e2d..c11dfcb 100644
+--- a/README.md
++++ b/README.md
+@@ -18,8 +18,12 @@ hehe m,e whjen fre game :3
+ 
+ <img src="https://meow6969.github.io/moew/imdanicing.gif">
+ 
++hehaa
++
+ <img src="https://meow6969.github.io/moew/haha.gif">
+ 
++cionputr
++
+ <img src="https://meow6969.github.io/moew/pythoncomputer.gif">
+ 
+ ## Roadmap
+-- 
+2.38.1
+
+
+From 30f6cd52812fb847deffdf0f2c61307349068bc4 Mon Sep 17 00:00:00 2001
+From: meow6969 <75815262+meow6969@users.noreply.github.com>
+Date: Fri, 7 Apr 2023 15:17:22 -0700
+Subject: [PATCH 9/9] Update README.md
+
+---
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index c11dfcb..1c65885 100644
+--- a/README.md
++++ b/README.md
+@@ -15,7 +15,7 @@ nyooo u canot do dis !! do not free game >:( !!!!!
+ <img src="https://meow6969.github.io/moew/cirnotalking.gif">
+ 
+ hehe m,e whjen fre game :3
+-
++nooo y rt some my gif not work ing :((((((( ic ry 
+ <img src="https://meow6969.github.io/moew/imdanicing.gif">
+ 
+ hehaa
+-- 
+2.38.1
+
