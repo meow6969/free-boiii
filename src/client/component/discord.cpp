@@ -68,6 +68,6 @@ namespace discord
 	};
 }
 
-#ifndef DEV_BUILD
+// #ifndef DEV_BUILD
 REGISTER_COMPONENT(discord::component)
-#endif
+// #endif
