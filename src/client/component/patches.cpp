@@ -2,10 +2,8 @@
 #include "loader/component_loader.hpp"
 
 #include <game/game.hpp>
-#include <game/utils.hpp>
 
 #include "network.hpp"
-#include "scheduler.hpp"
 
 #include <utils/hook.hpp>
 
@@ -46,6 +44,12 @@ namespace patches
 	{
 		void post_unpack() override
 		{
+			// print hexadecimal xuids in status command
+			utils::hook::copy_string(game::select(0x143050560, 0x140E85B00), "%12llx ");
+
+			// print hexadecimal xuids in chat game log command
+			utils::hook::set<char>(game::select(0x142FD9362, 0x140E16FA2), 'x');
+
 			// don't make script errors fatal error
 			utils::hook::call(game::select(0x1412CAC4D, 0x140158EB2), script_errors_stub);
 
@@ -56,11 +60,6 @@ namespace patches
 
 			// make sure client's reliableAck are not negative
 			sv_execute_client_messages_hook.create(game::select(0x14224A460, 0x14052F840), sv_execute_client_messages_stub);
-
-			scheduler::once([]
-			{
-				game::register_dvar_string("password", "", game::DVAR_USERINFO, "password");
-			}, scheduler::pipeline::main);
 		}
 	};
 }
