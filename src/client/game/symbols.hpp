@@ -8,6 +8,10 @@ namespace game
 {
 #define Com_Error(code, fmt, ...) Com_Error_(__FILE__, __LINE__, code, fmt, ##__VA_ARGS__)
 
+	// CG
+	WEAK symbol<void(int localClientNum, float* fov_x, float* dxDzAtDefaultAspectRatio, float* dxDz, float* dyDz)>
+	CG_CalcFOVfromLens{0x1404D6230};
+
 	// CL
 	WEAK symbol<void(int controllerIndex, XSESSION_INFO* hostInfo, const netadr_t* addr, int numPublicSlots,
 	                 int numPrivateSlots, const char* mapname, const char* gametype,
@@ -25,6 +29,8 @@ namespace game
 	WEAK symbol<void(int channel, unsigned int label, const char* fmt, ...)> Com_Printf{0x142148F60, 0x140505630};
 	WEAK symbol<void(const char* file, int line, int code, const char* fmt, ...)> Com_Error_{0x1420F8170, 0x140501470};
 	WEAK symbol<bool(eModes mode)> Com_SessionMode_IsMode{0x1420F7370};
+	WEAK symbol<int()> Com_SessionMode_GetMode{0x1420F6D30 , 0x1405002D0};
+	WEAK symbol<int()> Com_SessionMode_GetGameMode{0x1420F68B0, 0x1404FFE50};
 	WEAK symbol<void(eNetworkModes networkMode)> Com_SessionMode_SetNetworkMode{0x1420F75B0, 0x140500B80};
 	WEAK symbol<eGameModes(eGameModes gameMode)> Com_SessionMode_SetGameMode{0x1420F7570, 0x140500B40};
 	WEAK symbol<eModes(eModes mode)> Com_SessionMode_SetMode{0x1420F7570};
@@ -110,6 +116,7 @@ namespace game
 	WEAK symbol<const char*(const char* name)> CopyString{0x1422AC220, 0x14056BD70};
 
 	WEAK symbol<bool()> isModLoaded{0x1420D5020};
+	WEAK symbol<const char*()> getPublisherIdFromLoadedMod{0x1420D7680, 0x1404E3230};
 	WEAK symbol<void(int localClientNum, const char* mod, bool)> loadMod{0x1420D6930};
 	WEAK symbol<void()> reloadUserContent{0x1420D66C0, 0x1404E25C0};
 
@@ -130,7 +137,7 @@ namespace game
 	};
 	WEAK symbol<dvar_t*(dvarStrHash_t hash, const char* dvarName, int value, int min, int max, unsigned int flags,
 	                    const char* description)> Dvar_RegisterInt{
-		0x0, 0x14057B7B0
+		0x1422D0AE0, 0x14057B7B0
 	};
 	WEAK symbol<dvar_t*(dvarStrHash_t hash, const char* dvarName, float value, float min, float max, unsigned int flags,
 	                    const char* description)> Dvar_RegisterFloat{
@@ -156,7 +163,9 @@ namespace game
 	};
 
 	// UI
-	WEAK symbol<void(int localClientNumber, int errorcode, const char* errorMessage)> UI_OpenErrorPopupWithMessage{0x14228DEE0};
+	WEAK symbol<void(int localClientNumber, int errorcode, const char* errorMessage)> UI_OpenErrorPopupWithMessage{
+		0x14228DEE0
+	};
 	WEAK symbol<void(bool frontend)> UI_CoD_Init{0x141F29010, 0x1404A0A50};
 	WEAK symbol<void()> UI_CoD_LobbyUI_Init{0x141F2BD80, 0x1404A1F50};
 	WEAK symbol<void()> UI_CoD_Shutdown{0x141F32E10, 0x0};
@@ -203,12 +212,25 @@ namespace game
 	};
 	WEAK symbol<void(const char* text_in)> SV_Cmd_TokenizeString{0x1420EF130, 0x1404FA6C0};
 	WEAK symbol<void()> SV_Cmd_EndTokenizedString{0x1420EF0E0, 0x1404FA670};
+	WEAK symbol<void(void* client, msg_t* msg)> SV_ExecuteClientMessage{0x14224A460, 0x14052F840};
+
+	WEAK symbol<void(void* drop, const char* reason, bool tellThem, bool removeFromLobby)> SV_DropClient{
+		0x14224A050, 0x14052F430
+	};
 
 	// FS
 	WEAK symbol<char*(int bytes)> FS_AllocMem{0x1422AC9F0, 0x14056C340};
 
+	// Lobby
+	WEAK symbol<int(LobbyType lobbyType, LobbyClientType clientType)> LobbyHost_GetClientCount{
+		0x141ED8AC0, 0x14048A360
+	};
+
 	// Utils
 	WEAK symbol<const char*(char* str)> I_CleanStr{0x1422E9050, 0x140580E80};
+	WEAK symbol<void(char* dest, size_t destsize, const char* src)> I_strcpy{
+		0x1422E9410, 0x1405811E0
+	};
 
 	// Variables
 	WEAK symbol<cmd_function_s> cmd_functions{0x15689DF58, 0x14946F860};
@@ -217,6 +239,7 @@ namespace game
 	WEAK symbol<gentity_s> g_entities{0x0, 0x1471031B0};
 
 	WEAK symbol<int> level_time{0x0, 0x1474FDC94};
+	WEAK symbol<int> level_rounds_played{0x14A55BDEC, 0x1475097BC};
 
 	WEAK symbol<SOCKET> ip_socket{0x157E75818, 0x14A640988};
 
@@ -256,8 +279,6 @@ namespace game
 	constexpr auto CMD_MAX_NESTING = 8;
 
 	// Re-implementations
-	eModes Com_SessionMode_GetMode();
-
 	bool I_islower(int c);
 	bool I_isupper(int c);
 
